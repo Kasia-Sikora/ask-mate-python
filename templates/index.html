@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Rock+Salt&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
     {% include 'header.html' %}
+    {% include 'menu.html' %}
     {% block content %} {% endblock %}
 </body>
 </html>
