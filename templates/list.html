@@ -4,7 +4,10 @@
     <div>
         <ul>
             {% for question in uesr_questions %}
-                <li>{{ question.title }}   {{  question.message}}</li>
+                <li>
+                    <div>{{ question.title }}</div>
+                    <div>{{  question.message}}</div>
+                </li>
             {% endfor %}
         </ul>
 
