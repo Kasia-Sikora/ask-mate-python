@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div>
+        <ul>
+            {% for question in uesr_questions %}
+                <li>{{ question.title }}   {{  question.message}}</li>
+            {% endfor %}
+        </ul>
+
+    </div>
+{% endblock %}
