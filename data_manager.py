@@ -1,7 +1,6 @@
 import connection
 
 
-
 def search_for_question(question_id):
     user_questions = connection.get_all_questions()
     for i, question in enumerate(user_questions):
