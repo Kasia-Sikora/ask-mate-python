@@ -1,4 +1,5 @@
 from flask import Flask, url_for, render_template, request
+import data_manager
 import connection
 
 app = Flask(__name__)
@@ -18,11 +19,13 @@ def add_question():
 @app.route('/question-form', methods={'GET', 'POST'})
 def question_form():
     if request.method == 'POST':
-        dict_new_quest = request.form
-        question = False  # todo write and read new question from database
-        return question_details(question_id=question['id'])
+        dict_new_quest = dict(request.form)
+        new_quest_id = connection.save_all_questions(dict_new_quest)
+        quest_details = data_manager.search_for_question(new_quest_id)
+        return render_template('question_details.html', question_details=quest_details)
+
 
 @app.route('/question/<question_id>')
 def question_details(question_id):
-
-    return render_template('question_details.html', )
+    #guestion_detail = data_manager.search_for_question(new_quest_id)
+    return render_template('question_details.html')
