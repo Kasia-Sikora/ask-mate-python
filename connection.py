@@ -38,7 +38,6 @@ def save_all_questions(user_question):
             user_question['id'] = int(user_questions[-1]['id']) + 1
         writer.writerow(user_question)
 
-
 def save_all_answers(user_answer):
     user_answers = get_all_answers()
     with open("sample_data/answer.csv", "w") as file:

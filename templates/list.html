@@ -2,11 +2,29 @@
 
 {% block content %}
     <div id="content">
-        <ul>
+        <ul class="list">
             {% for question in uesr_questions %}
-                <li>
-                    <div>{{ question.title }}</div>
-                    <div>{{  question.message}}</div>
+                <li class="record">
+                    <table>
+                        <tr>
+                            <td class="top_bar" colspan="3">time {{ question.submission_time }}</td>
+                        </tr>
+                        <tr class="header_bar">
+                            <td>TITLE</td>
+                            <td>STATISTICS</td>
+                            <td>DUPA</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2"><a href="{{ url_for('question_details', question_id=question.id) }}">{{ question.title }}</a></td>
+                            <td>{{ question.view_number }}</td>
+                            <td rowspan="2">Next sprint</td>
+                        </tr>
+                        <tr>
+                            <td>{{ question.vote_number }}</td>
+                        </tr>
+
+                    </table>
+
                 </li>
             {% endfor %}
         </ul>
