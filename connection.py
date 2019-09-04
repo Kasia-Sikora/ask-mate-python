@@ -56,3 +56,19 @@ def save_all_answers(user_answer):
         else:
             user_answer['id'] = int(user_answers[-1]['id']) + 1
         writer.writerow(user_answer)
+
+
+def update_questions(user_questions):
+    with open("sample_data/question.csv", "w") as file:
+        writer = csv.DictWriter(file, fieldnames=QUESTION_HEADER)
+        writer.writeheader()
+        for question in user_questions:
+            writer.writerow(question)
+
+
+def update_answers(user_answers):
+    with open("sample_data/answer.csv", "w") as file:
+        writer = csv.DictWriter(file, fieldnames=ANSWER_HEADER)
+        writer.writeheader()
+        for answer in user_answers:
+            writer.writerow(answer)
