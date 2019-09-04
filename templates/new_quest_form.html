@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div id="content">
+    <form action="{{ url_for('question_form') }}" method="post" name="new_question" content="Add title">
+        <label for="title">Title</label>
+        <input type="text" id="title_form" name="title" title="title" >
+        <label for="message">message</label>
+        <textarea id="message_form" name="message" title="message"></textarea>
+        <input type="submit" value="Sub" >
+    </form>
+</div>
+{% endblock %}
+
+

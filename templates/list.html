@@ -15,7 +15,7 @@
                             <td>DUPA</td>
                         </tr>
                         <tr>
-                            <td rowspan="2">{{ question.title }}</td>
+                            <td rowspan="2"><a href="{{ url_for('question_details', question_id=question.id) }}">{{ question.title }}</a></td>
                             <td>{{ question.view_number }}</td>
                             <td rowspan="2">Next sprint</td>
                         </tr>

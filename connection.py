@@ -37,16 +37,3 @@ def save_all_questions(user_question):
             question['id'] = int(user_questions[-1]['id']) + 1
         writer.writerow(user_question)
 
-
-# def save_all_answers(user_answer):
-#     user_questions = get_all_questions()
-#     with open("sample_data/answer.csv", "w") as file:
-#         writer = csv.DictWriter(file, fieldnames=ANSWER_HEADER)
-#         writer.writeheader()
-#         for question in user_questions:
-#             writer.writerow(question)
-#         if len(user_questions) == 0:
-#             question['id'] = 0
-#         else:
-#             question['id'] = int(user_questions[-1]['id']) + 1
-#         writer.writerow(user_question)
