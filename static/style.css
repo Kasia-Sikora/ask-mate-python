@@ -93,6 +93,10 @@ ul {
     width: 100%;
     height: 40px;
     background-color: #00bcb5;
+    font-weight: 400;
+    font-size: 14px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    color: white;
 
 }
 .header_bar {
@@ -100,7 +104,9 @@ ul {
     background-color: #c6cbd5;
     color: white;
     line-height: 100%;
-    font-weight: bold;
+    font-weight: 400;
+    font-size: 14px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 table {
