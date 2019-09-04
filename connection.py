@@ -1,4 +1,5 @@
 import csv
+import util
 import collections
 
 QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
@@ -36,7 +37,11 @@ def save_all_questions(user_question):
             question['id'] = 0
         else:
             user_question['id'] = int(user_questions[-1]['id']) + 1
+            user_question['view_number'] = 0
+            user_question['vote_number'] = 0
+            user_question['submission_time'] = util.utc_time()
         writer.writerow(user_question)
+    return user_question['id']
 
 
 def save_all_answers(user_answer):
