@@ -2,8 +2,14 @@
 
 {% block content %}
     <div id="content">
+        <h3>Question:</h3>
+        <p>{{ question }}</p>
+        <h3>Answer:</h3>
+        <p>{{ answer }}</p>
+        <p>Vote:</p>
+        <h3>{{ vote }}</h3>
         <ul>
-            {% for question in uesr_questions %}
+            {% for question in user_questions %}
                 <li>
                     <div>{{ question.title }}</div>
                     <div>{{  question.message}}</div>
