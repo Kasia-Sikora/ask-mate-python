@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     questions_to_print = []
-    user_questions = connection.get_all_questions()
+    user_questions = sorted(connection.get_all_questions(), key = lambda x: x['submission_time'], reverse=True)
     return render_template('list.html', user_questions=user_questions)
 
 
@@ -48,4 +48,3 @@ def answer_form():
         question_id = new_answer['question_id']
         quest_details = data_manager.search_for_question(question_id)
         return redirect('/question/' + question_id)
-

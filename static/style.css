@@ -121,3 +121,10 @@ table {
     border: 3px solid rgba(0, 188, 181, 0.2);
 }
 
+.title {
+    width: 80%
+}
+
+.title2 {
+    width: 95%
+}

@@ -10,14 +10,16 @@
                             <td class="top_bar" colspan="3">time {{ question.submission_time }}</td>
                         </tr>
                         <tr class="header_bar">
-                            <td>TITLE</td>
+                            <td class="title">TITLE</td>
                             <td align="right" >VIEWS</td>
                             <td align="right">VOTES</td>
                         </tr>
                         <tr>
                             <td rowspan="2"><a href="{{ url_for('question_details', question_id=question.id) }}">{{ question.title }}</a></td>
                             <td align="right">{{ question.view_number }}</td>
-                            <td align="right">{{ question.vote_number }}</td>
+                            <td align="right"><img src="/static/img/vote_up.jpg" width="20" height="25">&nbsp;
+                                <img src="/static/img/vote_down.jpg" width="20" height="25">&nbsp;
+                                &nbsp;{{ question.vote_number }}</td>
                         </tr>
                     </table>
 

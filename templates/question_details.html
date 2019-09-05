@@ -4,6 +4,7 @@
     <div id="content">
         <ul class="list">
                 <li class="record">
+                    <a href="{{ url_for('add_answer', question_id=question_details.id) }}">Add an answer</a>
                     <table>
                         <tr>
                             <td class="top_bar">QUESTION TITLE</td>
@@ -18,10 +19,6 @@
                         <tr>
                             <td>{{question_details.message}}</td>
                         </tr>
-                        <tr>
-                            <br>
-                            <p><td class="top bar"><a href="{{ url_for('add_answer', question_id=question_details.id) }}">Add an answer</a></td></p>
-                        </tr>
                     </table>
                 <li>
                     <table>
@@ -33,8 +30,9 @@
                         {% for answer in answers %}
                         <table>
                            <tr class="header_bar">
-                                <td><font size="1" color="black">{{ answer.submission_time }}</font>&nbsp;&nbsp;<font color="black">{{ answer.message }}</font></td>
-                                <td><font color="black">{{ answer.vote_number }}</font></td>
+                                <td class="title2"><font size="1" color="black">{{ answer.submission_time }}</font>&nbsp;&nbsp;<font color="black">{{ answer.message }}</font></td>
+                                <td><img src="/static/img/vote_up.jpg" width="20" height="25">&nbsp;
+                                <img src="/static/img/vote_down.jpg" width="20" height="25">&nbsp;&nbsp;<font color="black">{{ answer.vote_number }}</font></td>
                             </tr>
                         </table>
                 </li>
