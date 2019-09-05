@@ -3,7 +3,7 @@
 {% block content %}
     <div id="content">
         <ul class="list">
-            {% for question in uesr_questions %}
+            {% for question in user_questions %}
                 <li class="record">
                     <table>
                         <tr>
@@ -11,18 +11,14 @@
                         </tr>
                         <tr class="header_bar">
                             <td>TITLE</td>
-                            <td>STATISTICS</td>
-                            <td>DUPA</td>
+                            <td align="right" >VIEWS</td>
+                            <td align="right">VOTES</td>
                         </tr>
                         <tr>
                             <td rowspan="2"><a href="{{ url_for('question_details', question_id=question.id) }}">{{ question.title }}</a></td>
-                            <td>{{ question.view_number }}</td>
-                            <td rowspan="2">Next sprint</td>
+                            <td align="right">{{ question.view_number }}</td>
+                            <td align="right">{{ question.vote_number }}</td>
                         </tr>
-                        <tr>
-                            <td>{{ question.vote_number }}</td>
-                        </tr>
-
                     </table>
 
                 </li>

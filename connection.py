@@ -1,4 +1,6 @@
 import csv
+from datetime import datetime
+
 import util
 import collections
 
@@ -41,7 +43,6 @@ def save_all_questions(user_question):
             user_question['vote_number'] = 0
             user_question['submission_time'] = util.utc_time()
         writer.writerow(user_question)
-    return user_question['id']
 
 
 def save_all_answers(user_answer):
@@ -55,7 +56,10 @@ def save_all_answers(user_answer):
             answer['id'] = 0
         else:
             user_answer['id'] = int(user_answers[-1]['id']) + 1
+            user_answer['submission_time'] = util.utc_time()
+            user_answer['vote_number'] = 0
         writer.writerow(user_answer)
+    return user_answer
 
 
 def update_questions(user_questions):
