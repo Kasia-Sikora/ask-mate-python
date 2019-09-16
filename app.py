@@ -7,7 +7,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    questions_to_print = []
     user_questions = data_manager.get_all_questions()
     return render_template('list.html', user_questions=user_questions)
 
