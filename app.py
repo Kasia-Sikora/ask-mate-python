@@ -29,8 +29,6 @@ def question_form():
 def question_details(question_id):
     quest_details = data_manager.search_for_question(question_id)
     answers = data_manager.search_for_all_answers(question_id)
-    print(answers)
-    print(quest_details)
     return render_template('question_details.html',
                            question_details=quest_details,
                            answers=answers)
