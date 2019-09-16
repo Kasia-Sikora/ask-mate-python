@@ -20,9 +20,8 @@ def add_question():
 @app.route('/question-form', methods={'GET', 'POST'})
 def question_form():
     if request.method == 'POST':
-        dict_new_quest = dict(request.form)
-        new_quest_id = connection.save_all_questions(dict_new_quest)
-        quest_details = data_manager.search_for_question(new_quest_id)
+        new_quest_id = connection.save_all_questions()
+        quest_details = data_manager.search_for_question()
         return render_template('question_details.html',
                                question_details=quest_details)
 
@@ -31,8 +30,6 @@ def question_form():
 def question_details(question_id):
     quest_details = data_manager.search_for_question(question_id)
     answers = data_manager.search_for_all_answers(question_id)
-    print(answers)
-    print(quest_details)
     return render_template('question_details.html',
                            question_details=quest_details,
                            answers=answers)
