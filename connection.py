@@ -1,78 +1,51 @@
-import csv
-from datetime import datetime
-
-import util
-import collections
-
-QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+# Creates a decorator to handle the database connection/cursor opening/closing.
+# Creates the cursor with RealDictCursor, thus it returns real dictionaries, where the column names are the keys.
+import os
+import psycopg2
+import psycopg2.extras
 
 
-def get_all_questions():
-    user_questions = []
-    with open("sample_data/question.csv", "r") as file:
-        csv_reader = csv.DictReader(file)
-        for row in csv_reader:
-            row = dict(row)
-            user_questions.append(row)
-    return user_questions
+def get_connection_string():
+    # setup connection string
+    # to do this, please define these environment variables first
+    user_name = os.environ.get('PSQL_USER_NAME')
+    password = os.environ.get('PSQL_PASSWORD')
+    host = os.environ.get('PSQL_HOST')
+    database_name = os.environ.get('PSQL_DB_NAME')
+
+    env_variables_defined = user_name and password and host and database_name
+
+    if env_variables_defined:
+        # this string describes all info for psycopg2 to connect to the database
+        return 'postgresql://{user_name}:{password}@{host}/{database_name}'.format(
+            user_name=user_name,
+            password=password,
+            host=host,
+            database_name=database_name
+        )
+    else:
+        raise KeyError('Some necessary environment variable(s) are not defined')
 
 
-def get_all_answers():
-    user_answers = []
-    with open("sample_data/answer.csv", "r") as file:
-        csv_reader = csv.DictReader(file)
-        for row in csv_reader:
-            row = dict(row)
-            user_answers.append(row)
-    return user_answers
+def open_database():
+    try:
+        connection_string = get_connection_string()
+        connection = psycopg2.connect(connection_string)
+        connection.autocommit = True
+    except psycopg2.DatabaseError as exception:
+        print('Database connection problem')
+        raise exception
+    return connection
 
 
-def save_all_questions(user_question):
-    user_questions = get_all_questions()
-    with open("sample_data/question.csv", "w") as file:
-        writer = csv.DictWriter(file, fieldnames=QUESTION_HEADER)
-        writer.writeheader()
-        for question in user_questions:
-            writer.writerow(question)
-        if len(user_questions) == 0:
-            question['id'] = 0
-        else:
-            user_question['id'] = int(user_questions[-1]['id']) + 1
-            user_question['view_number'] = 0
-            user_question['vote_number'] = 0
-            user_question['submission_time'] = util.utc_time()
-        writer.writerow(user_question)
+def connection_handler(function):
+    def wrapper(*args, **kwargs):
+        connection = open_database()
+        # we set the cursor_factory parameter to return with a RealDictCursor cursor (cursor which provide dictionaries)
+        dict_cur = connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        ret_value = function(dict_cur, *args, **kwargs)
+        dict_cur.close()
+        connection.close()
+        return ret_value
 
-
-def save_all_answers(user_answer):
-    user_answers = get_all_answers()
-    with open("sample_data/answer.csv", "w") as file:
-        writer = csv.DictWriter(file, fieldnames=ANSWER_HEADER)
-        writer.writeheader()
-        for answer in user_answers:
-            writer.writerow(answer)
-        if len(user_answers) == 0:
-            answer['id'] = 0
-        else:
-            user_answer['id'] = int(user_answers[-1]['id']) + 1
-            user_answer['submission_time'] = util.utc_time()
-            user_answer['vote_number'] = 0
-        writer.writerow(user_answer)
-    return user_answer
-
-
-def update_questions(user_questions):
-    with open("sample_data/question.csv", "w") as file:
-        writer = csv.DictWriter(file, fieldnames=QUESTION_HEADER)
-        writer.writeheader()
-        for question in user_questions:
-            writer.writerow(question)
-
-
-def update_answers(user_answers):
-    with open("sample_data/answer.csv", "w") as file:
-        writer = csv.DictWriter(file, fieldnames=ANSWER_HEADER)
-        writer.writeheader()
-        for answer in user_answers:
-            writer.writerow(answer)
+    return wrapper
