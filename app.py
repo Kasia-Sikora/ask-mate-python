@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     questions_to_print = []
-    user_questions = sorted(connection.get_all_questions(), key = lambda x: x['submission_time'], reverse=True)
+    user_questions = data_manager.get_all_questions()
     return render_template('list.html', user_questions=user_questions)
 
 
@@ -17,12 +17,11 @@ def add_question():
     return render_template('new_quest_form.html')
 
 
-@app.route('/question-form', methods={'GET', 'POST'})
+@app.route('/question-form', methods=['GET', 'POST'])
 def question_form():
     if request.method == 'POST':
         dict_new_quest = dict(request.form)
-        new_quest_id = connection.save_all_questions(dict_new_quest)
-        quest_details = data_manager.search_for_question(new_quest_id)
+        quest_details = data_manager.save_question(dict_new_quest)
         return render_template('question_details.html',
                                question_details=quest_details)
 
