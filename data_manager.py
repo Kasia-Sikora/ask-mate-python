@@ -23,10 +23,11 @@ def save_question(cursor, questions):
 
 @connection.connection_handler
 def search_for_question(cursor, quest_id):
-    cursor.execute(""" SELECT submission_time, view_number, vote_number, title, message, image
+    cursor.execute(""" SELECT id, submission_time, vote_number, title, message, image
                     FROM question 
-                    WHERE id = %(id)s""", {'id': quest_id})
+                    WHERE id = %(ids)s""", {'ids': quest_id})
     question = cursor.fetchall()
+    question = question[0]
     return question
 
 
@@ -37,3 +38,4 @@ def search_for_all_answers(cursor, quest_id):
                     WHERE question_id = %(id)s""", {'id': quest_id})
     question = cursor.fetchall()
     return question
+
