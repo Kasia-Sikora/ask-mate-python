@@ -35,3 +35,5 @@ def search_for_all_answers(cursor, quest_id):
     cursor.execute(""" SELECT submission_time, vote_number, message, image
                     FROM answer 
                     WHERE question_id = %(id)s""", {'id': quest_id})
+    question = cursor.fetchall()
+    return question

@@ -1,6 +1,6 @@
 from flask import Flask, url_for, render_template, request, redirect
 import data_manager
-import connection
+import connection, util
 
 app = Flask(__name__)
 
@@ -27,7 +27,8 @@ def question_form():
 
 @app.route('/question/<question_id>')
 def question_details(question_id):
-    quest_details = data_manager.search_for_question(question_id)
+    quest_details = data_manager.search_for_question(question_id)[0]
+    # quest_details = util.change_view_number(quest_details)
     answers = data_manager.search_for_all_answers(question_id)
     return render_template('question_details.html',
                            question_details=quest_details,
