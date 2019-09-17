@@ -27,10 +27,10 @@ def question_form():
 
 @app.route('/question/<question_id>')
 def question_details(question_id):
-    quest_details = data_manager.search_for_question(question_id)
+    quest = data_manager.search_for_question(question_id)
     answers = data_manager.search_for_all_answers(question_id)
     return render_template('question_details.html',
-                           question_details=quest_details,
+                           question_details=quest,
                            answers=answers)
 
 
@@ -39,10 +39,10 @@ def add_answer(question_id):
     return render_template('new_answer_form.html', question_id=question_id)
 
 
-@app.route('/answer_form', methods={'GET', 'POST'})
+@app.route('/answer_form', methods=['GET', 'POST'])
 def answer_form():
     if request.method == 'POST':
-        dict_new_answer = dict(request.form)
+        dict_new_answer = request.form
         new_answer = connection.save_all_answers(dict_new_answer)
         question_id = new_answer['question_id']
         quest_details = data_manager.search_for_question(question_id)
