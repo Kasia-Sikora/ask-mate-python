@@ -43,7 +43,5 @@ def add_answer(question_id):
 def answer_form():
     if request.method == 'POST':
         dict_new_answer = request.form
-        new_answer = connection.save_all_answers(dict_new_answer)
-        question_id = new_answer['question_id']
-        quest_details = data_manager.search_for_question(question_id)
-        return redirect('/question/' + question_id)
+        data_manager.new_answer(dict_new_answer)
+        return redirect(url_for('question_details', question_id=dict_new_answer['question_id']))
