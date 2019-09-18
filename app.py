@@ -34,16 +34,36 @@ def question_details(question_id):
                            answers=answers)
 
 
+@app.route('/question/<question_id>/new_comment')
+def new_comment(question_id):
+    return render_template('new_comment_form.html', question_id=question_id)
+
+
+@app.route('/comment_form', methods=['GET', 'POST'])
+def comment_form():
+    if request.method == 'POST':
+        dict_comment = request.form
+        data_manager.save_question_comment(dict_comment)
+        return redirect(url_for('comment_details', question_id=dict_comment['question_id']))
+
+
+@app.route('/question/<question_id>/comments')
+def comment_details(question_id):
+    quest = data_manager.search_for_question(question_id)
+    comments = data_manager.get_all_question_comments(question_id)
+    return render_template('comment_details.html',
+                           question_details=quest, comments=comments)
+
+
 @app.route('/question/<question_id>/new-answer')
 def add_answer(question_id):
     return render_template('new_answer_form.html', question_id=question_id)
 
 
-# @app.route('/answer_form', methods=['GET', 'POST'])
-# def answer_form():
-#     if request.method == 'POST':
-#         dict_new_answer = request.form
-#         new_answer = connection.save_all_answers(dict_new_answer)
-#         question_id = new_answer['question_id']
-#         quest_details = data_manager.search_for_question(question_id)
-#         return redirect('/question/' + question_id)
+@app.route('/answer_form', methods=['GET', 'POST'])
+def answer_form():
+    if request.method == 'POST':
+        dict_new_answer = request.form
+        data_manager.new_answer(dict_new_answer)
+        return redirect(url_for('question_details', question_id=dict_new_answer['question_id']))
+
