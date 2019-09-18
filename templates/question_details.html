@@ -33,9 +33,11 @@
                         <tr class="header_bar">
                             <td class="title2"><font size="1" color="black">{{ answer.submission_time }}</font>&nbsp;&nbsp;<font
                                     color="black">{{ answer.message }}</font></td>
-                            <td><img src="/static/img/vote_up.jpg" width="20" height="25">&nbsp;
-                                <img src="/static/img/vote_down.jpg" width="20" height="25">&nbsp;&nbsp;<font
-                                        color="black">{{ answer.vote_number }}</font></td>
+                            <td><a href="{{ url_for('answer_vote_up', question_id=question_details.id, answer_id=answer.id) }}"> <img src="/static/img/vote_up.jpg" width="20" height="25"></a>&nbsp;
+                                <a href="{{ url_for('answer_vote_down', question_id=question_details.id, answer_id=answer.id) }}"><img src="/static/img/vote_down.jpg" width="20" height="25"></a>
+                            </td>
+                            <td><font color="black">{{ answer.vote_number }}</font></td>
+                            <td><a href="{{ url_for('edit_answer', answer_id=answer.id) }}">EDIT</a></td>
                         </tr>
                     </table>
                     </li>
