@@ -6,6 +6,8 @@
             <li class="record">
                 <a href="{{ url_for('add_answer', question_id=question_details.id) }}">Add an answer</a>
                 <a href="{{ url_for('new_comment', question_id=question_details.id) }}">Add comment</a>
+                <a href="{{ url_for('comment_details', question_id=question_details.id) }}">Show comments</a>
+
                 <table>
                     <tr>
                         <td class="top_bar">QUESTION TITLE</td>
