@@ -70,7 +70,6 @@ def answer_form():
 
 @app.route('/question/<question_id>/vote-up')
 def answer_vote_up(question_id):
-
     info_dict = {
         'id_answer': request.args.get('answer_id'),
         "vote": 1
@@ -104,3 +103,17 @@ def update_answer(answer_id):
         return redirect(url_for('question_details', question_id=dict_from_dm['question_id']))
 
 
+@app.route('/comment/<comment_id>/edit')
+def edit_comment_form(comment_id):
+    comment_det = data_manager.get_comment(comment_id=comment_id)
+    return render_template('edit_comment_form.html', comment_det=comment_det)
+
+
+@app.route('/comment/<comment_id>/form', methods=['GET', 'POST'])
+def form_comment(comment_id):
+    form_dict = dict(request.form)
+    form_dict['comment_id'] = comment_id
+    comment_det = data_manager.update_comment(form_dict=form_dict)
+    if comment_det['question_id'] is not None:
+        print('olololol')
+        return redirect(url_for('question_details', question_id=comment_det['question_id']))

@@ -30,6 +30,8 @@
                         <tr class="header_bar">
                             <td class="title2"><font size="1" color="black">{{ comment.submission_time }}</font>&nbsp;&nbsp;
                                 <font color="black">{{ comment.message }}</font></td>
+                            <td><a href="{{ url_for('edit_comment_form', comment_id=comment.id) }}">Edit</a></td>
+                            <td>delete</td>
                         </tr>
                     </table>
                     </li>
