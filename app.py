@@ -67,3 +67,40 @@ def answer_form():
         data_manager.new_answer(dict_new_answer)
         return redirect(url_for('question_details', question_id=dict_new_answer['question_id']))
 
+
+@app.route('/question/<question_id>/vote-up')
+def answer_vote_up(question_id):
+
+    info_dict = {
+        'id_answer': request.args.get('answer_id'),
+        "vote": 1
+    }
+    data_manager.change_answer_vote(dictionary=info_dict)
+    return redirect(url_for('question_details', question_id=question_id))
+
+
+@app.route('/question/<question_id>/vote-down')
+def answer_vote_down(question_id):
+    info_dict = {
+        'id_answer': request.args.get('answer_id'),
+        "vote": -1
+    }
+    data_manager.change_answer_vote(dictionary=info_dict)
+    return redirect(url_for('question_details', question_id=question_id))
+
+
+@app.route('/answer/<answer_id>/edit')
+def edit_answer(answer_id):
+    answer_detail = data_manager.get_answer(answer_id)
+    return render_template('edit_answer_form.html', answer_detail=answer_detail)
+
+
+@app.route('/update_answer/<answer_id>', methods=['GET', 'POST'])
+def update_answer(answer_id):
+    if request.method == 'POST':
+        form_dict = dict(request.form)
+        form_dict['answer_id'] = answer_id
+        dict_from_dm = data_manager.update_answer(answer_dict=form_dict)
+        return redirect(url_for('question_details', question_id=dict_from_dm['question_id']))
+
+

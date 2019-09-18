@@ -1,0 +1,11 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div id="content">
+    <form action="{{ url_for('update_answer', answer_id=answer_detail.id)}}" method="post" name="edit_answer">
+        <p><label for="message">Answer:</label><br>
+        <textarea id="message_form" name="message" title="message" rows="10" cols="50" minlength="10">{{ answer_detail.message }}</textarea></p>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+{% endblock %}
