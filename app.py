@@ -68,6 +68,28 @@ def answer_form():
         return redirect(url_for('question_details', question_id=dict_new_answer['question_id']))
 
 
+@app.route('/answer/<answer_id>/new-comment')
+def new_answer_comment(answer_id):
+    return render_template('answer_comment_form.html', answer_id=answer_id)
+
+
+@app.route('/answer_comment_form', methods=['GET', 'POST'])
+def answer_comment_form():
+    if request.method == 'POST':
+        dict_comment = request.form
+        data_manager.save_answer_comment(dict_comment)
+        return redirect(url_for('answer_comment_details', answer_id=dict_comment['answer_id']))
+
+
+@app.route('/answer/<answer_id>/comments')
+def answer_comment_details(answer_id):
+    answer = data_manager.search_for_answer(answer_id)
+    print(answer)
+    comments = data_manager.get_all_answer_comments(answer_id)
+    return render_template('comment_details.html',
+                           answer_details=answer, comments=comments)
+
+
 @app.route('/question/<question_id>/vote-up')
 def answer_vote_up(question_id):
 

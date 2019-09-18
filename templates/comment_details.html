@@ -5,6 +5,7 @@
         <ul class="list">
             <li class="record">
                 <table>
+                  {% if question_details %}
                     <tr>
                         <td class="top_bar">QUESTION TITLE</td>
                         <td class="top_bar">VIEWS</td>
@@ -18,6 +19,17 @@
                     <tr>
                         <td>{{ question_details.message }}</td>
                     </tr>
+                    {% endif %}
+                    {% if answer_details %}
+                    <tr>
+                        <td class="top_bar">ANSWER TITLE</td>
+                        <td class="top_bar">VOTES</td>
+                    </tr>
+                    <tr class="header_bar">
+                        <td><font color="black">{{ answer_details.message }}</font></td>
+                        <td><font color="black">{{ answer_details.vote_number }}</font></td>
+                    </tr>
+                    {% endif %}
                 </table>
             <li>
                 <table>

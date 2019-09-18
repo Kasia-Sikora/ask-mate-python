@@ -42,6 +42,15 @@ def search_for_all_answers(cursor, quest_id):
 
 
 @connection.connection_handler
+def search_for_answer(cursor, answer_id):
+    cursor.execute(""" SELECT id, submission_time, vote_number, message, image
+                    FROM answer 
+                    WHERE id = %(id)s ORDER BY submission_time DESC""", {'id': answer_id})
+    answer = cursor.fetchall()
+    return answer[0]
+
+
+@connection.connection_handler
 def new_answer(cursor, answer_dict):
     cursor.execute("""INSERT INTO answer (submission_time, question_id, message) VALUES (CURRENT_TIMESTAMP, %(question_id)s, %(message)s);
                         SELECT * FROM question WHERE id = %(question_id)s""", answer_dict)
@@ -77,42 +86,25 @@ def save_question_comment(cursor, question_comment):
     new_question_comment = cursor.fetchall()
     return new_question_comment
 
-
-@connection.connection_handler
-def get_all_answer_comments(cursor):
-    cursor.execute('''
-                SELECT * FROM comment WHERE answer_id IS NOT NULL 
-                ORDER BY submission_time;''')
-    answer_comments = cursor.fetchall()
-    return answer_comments
-
 #
 @connection.connection_handler
-def get_all_question_comments(cursor, question_id):
+def get_all_answer_comments(cursor, answer_id):
     cursor.execute('''
-                SELECT * FROM comment WHERE question_id=%(question_id)s ORDER BY submission_time DESC;'''
-                   ,  {'question_id': question_id})
-    question_comments = cursor.fetchall()
-    return question_comments
-
-
-@connection.connection_handler
-def save_question_comment(cursor, question_comment):
-    cursor.execute("""INSERT INTO comment (question_id, submission_time, message) 
-                        VALUES (%(question_id)s, CURRENT_TIMESTAMP, %(message)s);
-                        SELECT * FROM comment WHERE question_id = %(question_id)s""", question_comment)
-    new_question_comment = cursor.fetchall()
-    return new_question_comment
-
-
-@connection.connection_handler
-def get_all_answer_comments(cursor):
-    cursor.execute('''
-                SELECT * FROM comment WHERE answer_id IS NOT NULL 
-                ORDER BY submission_time;''')
+                SELECT * FROM comment WHERE answer_id=%(answer_id)s ORDER BY submission_time DESC;'''
+                   ,  {'answer_id': answer_id})
     answer_comments = cursor.fetchall()
     return answer_comments
 
+
+@connection.connection_handler
+def save_answer_comment(cursor, answer_comment):
+    cursor.execute("""INSERT INTO comment (answer_id, submission_time, message) 
+                        VALUES (%(answer_id)s, CURRENT_TIMESTAMP, %(message)s);
+                        SELECT * FROM comment WHERE answer_id = %(answer_id)s""", answer_comment)
+    new_answer_comment = cursor.fetchall()
+    return new_answer_comment
+
+#
 @connection.connection_handler
 def change_answer_vote(cursor, dictionary):
     cursor.execute(""" UPDATE answer 
