@@ -88,7 +88,7 @@ def answer_comment_details(answer_id):
                            answer_details=answer, comments=comments)
 
 
-@app.route('/question/<question_id>/vote-up')
+@app.route('/question/<question_id>/answer-up')
 def answer_vote_up(question_id):
     info_dict = {
         'id_answer': request.args.get('answer_id'),
@@ -98,7 +98,7 @@ def answer_vote_up(question_id):
     return redirect(url_for('question_details', question_id=question_id))
 
 
-@app.route('/question/<question_id>/vote-down')
+@app.route('/question/<question_id>/answer-down')
 def answer_vote_down(question_id):
     info_dict = {
         'id_answer': request.args.get('answer_id'),
@@ -106,6 +106,26 @@ def answer_vote_down(question_id):
     }
     data_manager.change_answer_vote(dictionary=info_dict)
     return redirect(url_for('question_details', question_id=question_id))
+
+@app.route('/question/<question_id>/vote-up')
+def question_vote_up(question_id):
+    info_dict = {
+        "vote": 1,
+        "question_id": question_id
+    }
+    data_manager.change_question_vote(dictionary=info_dict)
+    return redirect(url_for('home'))
+
+
+@app.route('/question/<question_id>/vote-down')
+def question_vote_down(question_id):
+    info_dict = {
+
+        "vote": -1,
+        "question_id": question_id
+    }
+    data_manager.change_question_vote(dictionary=info_dict)
+    return redirect(url_for('home'))
 
 
 @app.route('/answer/<answer_id>/edit')

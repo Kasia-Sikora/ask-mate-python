@@ -4,8 +4,8 @@ import connection
 @connection.connection_handler
 def get_all_questions(cursor):
     cursor.execute('''
-                SELECT * FROM question ORDER BY submission_time;
-                ''', )
+                SELECT * FROM question ORDER BY submission_time DESC;
+                ''')
     questions = cursor.fetchall()
     return questions
 
@@ -112,6 +112,14 @@ def change_answer_vote(cursor, dictionary):
     cursor.execute(""" UPDATE answer 
                         SET vote_number = vote_number + %(vote)s 
                         WHERE id = %(id_answer)s""",
+                   dictionary)
+
+
+@connection.connection_handler
+def change_question_vote(cursor, dictionary):
+    cursor.execute(""" UPDATE question 
+                        SET vote_number = vote_number + %(vote)s 
+                        WHERE id = %(question_id)s""",
                    dictionary)
 
 
