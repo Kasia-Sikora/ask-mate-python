@@ -41,8 +41,10 @@
                     <table>
                         <tr class="header_bar">
                             <td class="title2">{{ comment.submission_time }}&nbsp;&nbsp;{{ comment.message }}</td>
-                            <td><a href="{{ url_for('edit_comment_form', comment_id=comment.id) }}">Edit</a></td>
-                            <td><a href="{{ url_for('delete_comment', comment_id=comment.id) }}">Delete</a></td>
+                            <td><a href="{{ url_for('edit_comment_form', comment_id=comment.id) }}">
+                                <img id="picture2" src="/static/img/buttons/button_edit.png"></a></td>
+                            <td><a href="{{ url_for('delete_comment', comment_id=comment.id) }}">
+                                <img id="picture2" src="/static/img/buttons/button_delete.png"></a></td>
                         </tr>
                     </table>
                     </li>

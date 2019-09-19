@@ -4,9 +4,12 @@
     <div id="content">
         <ul class="list">
             <li class="record">
-                <a href="{{ url_for('add_answer', question_id=question_details.id) }}">Add an answer</a>
-                <a href="{{ url_for('new_comment', question_id=question_details.id) }}">Add comment</a>
-                <a href="{{ url_for('comment_details', question_id=question_details.id) }}">Show question comments</a>
+                <a href="{{ url_for('add_answer', question_id=question_details.id) }}">
+                    <img id="picture" src="/static/img/buttons/button_add-an-answer.png"></a>
+                <a href="{{ url_for('new_comment', question_id=question_details.id) }}">
+                    <img id="picture" src="/static/img/buttons/button_add-comment.png"></a>
+                <a href="{{ url_for('comment_details', question_id=question_details.id) }}">
+                    <img id="picture" src="/static/img/buttons/button_show-question-comments.png"></a>
 
                 <table>
                     <tr>
@@ -34,8 +37,10 @@
                     <table>
                         <tr class="header_bar">
                             <td class="title2">{{ answer.submission_time }}&nbsp;&nbsp {{ answer.message }} <a
-                                    href="{{ url_for("new_answer_comment", answer_id=answer.id) }}"> Comment</a>
-                                <a href="{{ url_for('answer_comment_details', answer_id=answer.id) }}">Show comments</a>
+                                    href="{{ url_for("new_answer_comment", answer_id=answer.id) }}">
+                                <img id="picture2" src="/static/img/buttons/button_comment.png"></a>
+                                <a href="{{ url_for('answer_comment_details', answer_id=answer.id) }}">
+                                    <img id="picture2" src="/static/img/buttons/button_show-comments.png"></a>
                             </td>
                             <td>
                                 <a href="{{ url_for('answer_vote_up', question_id=question_details.id, answer_id=answer.id) }}">
@@ -44,7 +49,8 @@
                                         src="/static/img/vote_down.jpg" width="20" height="25"></a>
                             </td>
                             <td>{{ answer.vote_number }}</td>
-                            <td><a href="{{ url_for('edit_answer', answer_id=answer.id) }}">EDIT</a></td>
+                            <td><a href="{{ url_for('edit_answer', answer_id=answer.id) }}">
+                                <img id="picture2" src="/static/img/buttons/button_edit.png"></a></td>
                         </tr>
                     </table>
                     </li>
