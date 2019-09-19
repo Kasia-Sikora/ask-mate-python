@@ -15,9 +15,9 @@
                         <td class="top_bar">VOTES</td>
                     </tr>
                     <tr class="header_bar">
-                        <td><font color="black">{{ question_details.title }}</font></td>
-                        <td><font color="black">{{ question_details.view_number }}</font></td>
-                        <td><font color="black">{{ question_details.vote_number }}</font></td>
+                        <td>{{ question_details.title }}</td>
+                        <td>{{ question_details.view_number }}</td>
+                        <td>{{ question_details.vote_number }}</td>
                     </tr>
                     <tr>
                         <td>{{ question_details.message }}</td>
@@ -33,8 +33,7 @@
                 {% for answer in answers %}
                     <table>
                         <tr class="header_bar">
-                            <td class="title2"><font size="1" color="black">{{ answer.submission_time }}</font>&nbsp;&nbsp;<font
-                                    color="black">{{ answer.message }}</font> <a
+                            <td class="title2">{{ answer.submission_time }}&nbsp;&nbsp {{ answer.message }} <a
                                     href="{{ url_for("new_answer_comment", answer_id=answer.id) }}"> Comment</a>
                                 <a href="{{ url_for('answer_comment_details', answer_id=answer.id) }}">Show comments</a>
                             </td>
@@ -44,7 +43,7 @@
                                 <a href="{{ url_for('answer_vote_down', question_id=question_details.id, answer_id=answer.id) }}"><img
                                         src="/static/img/vote_down.jpg" width="20" height="25"></a>
                             </td>
-                            <td><font color="black">{{ answer.vote_number }}</font></td>
+                            <td>{{ answer.vote_number }}</td>
                             <td><a href="{{ url_for('edit_answer', answer_id=answer.id) }}">EDIT</a></td>
                         </tr>
                     </table>

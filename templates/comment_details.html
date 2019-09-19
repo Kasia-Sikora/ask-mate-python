@@ -12,9 +12,9 @@
                         <td class="top_bar">VOTES</td>
                     </tr>
                     <tr class="header_bar">
-                        <td><font color="black">{{ question_details.title }}</font></td>
-                        <td><font color="black">{{ question_details.view_number }}</font></td>
-                        <td><font color="black">{{ question_details.vote_number }}</font></td>
+                        <td>{{ question_details.title }}</td>
+                        <td>{{ question_details.view_number }}</td>
+                        <td>{{ question_details.vote_number }}</td>
                     </tr>
                     <tr>
                         <td>{{ question_details.message }}</td>
@@ -26,8 +26,8 @@
                         <td class="top_bar">VOTES</td>
                     </tr>
                     <tr class="header_bar">
-                        <td><font color="black">{{ answer_details.message }}</font></td>
-                        <td><font color="black">{{ answer_details.vote_number }}</font></td>
+                        <td>{{ answer_details.message }}</td>
+                        <td>{{ answer_details.vote_number }}</td>
                     </tr>
                     {% endif %}
                 </table>
@@ -40,8 +40,7 @@
                 {% for comment in comments %}
                     <table>
                         <tr class="header_bar">
-                            <td class="title2"><font size="1" color="black">{{ comment.submission_time }}</font>&nbsp;&nbsp;
-                                <font color="black">{{ comment.message }}</font></td>
+                            <td class="title2">{{ comment.submission_time }}&nbsp;&nbsp {{ comment.message }}</td>
                         </tr>
                     </table>
                     </li>

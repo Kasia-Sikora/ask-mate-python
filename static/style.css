@@ -102,7 +102,7 @@ ul {
 .header_bar {
     height: 28px;
     background-color: #c6cbd5;
-    color: white;
+    color: black;
     line-height: 100%;
     font-weight: 400;
     font-size: 14px;
@@ -126,5 +126,6 @@ table {
 }
 
 .title2 {
-    width: 94%
+    width: 94%;
+    color: black;
 }
