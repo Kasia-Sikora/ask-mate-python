@@ -36,8 +36,10 @@
                 {% for answer in answers %}
                     <table>
                         <tr class="header_bar">
-                            <td class="title2">{{ answer.submission_time }}&nbsp;&nbsp {{ answer.message }} <a
-                                    href="{{ url_for("new_answer_comment", answer_id=answer.id) }}">
+                            <td class="title2">{{ answer.submission_time }}&nbsp;&nbsp {{ answer.message }} <br>
+                                <a href="{{ url_for('edit_answer', answer_id=answer.id) }}">
+                                <img id="picture2" src="/static/img/buttons/button_edit.png"></a>
+                                <a href="{{ url_for("new_answer_comment", answer_id=answer.id) }}">
                                 <img id="picture2" src="/static/img/buttons/button_comment.png"></a>
                                 <a href="{{ url_for('answer_comment_details', answer_id=answer.id) }}">
                                     <img id="picture2" src="/static/img/buttons/button_show-comments.png"></a>
@@ -49,8 +51,6 @@
                                         src="/static/img/vote_down.jpg" width="20" height="25"></a>
                             </td>
                             <td>{{ answer.vote_number }}</td>
-                            <td><a href="{{ url_for('edit_answer', answer_id=answer.id) }}">
-                                <img id="picture2" src="/static/img/buttons/button_edit.png"></a></td>
                         </tr>
                     </table>
                     </li>
