@@ -40,7 +40,9 @@
                 {% for comment in comments %}
                     <table>
                         <tr class="header_bar">
-                            <td class="title2">{{ comment.submission_time }}&nbsp;&nbsp {{ comment.message }}</td>
+                            <td class="title2">{{ comment.submission_time }}&nbsp;&nbsp;{{ comment.message }}</td>
+                            <td><a href="{{ url_for('edit_comment_form', comment_id=comment.id) }}">Edit</a></td>
+                            <td>delete</td>
                         </tr>
                     </table>
                     </li>

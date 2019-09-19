@@ -130,3 +130,20 @@ def update_answer(cursor, answer_dict):
     question_id = cursor.fetchall()
     question_id = dict(question_id[0])
     return question_id
+
+
+@connection.connection_handler
+def get_comment(cursor, comment_id):
+    cursor.execute("""SELECT * FROM comment WHERE id = %(id)s;""", {'id': comment_id})
+    comment_details = cursor.fetchall()
+    comment_details = dict(comment_details[0])
+    return comment_details
+
+@connection.connection_handler
+def update_comment(cursor, form_dict):
+    print(form_dict)
+    cursor.execute("""UPDATE comment SET message = %(message)s WHERE id = %(comment_id)s;""", form_dict)
+    cursor.execute("""SELECT * FROM comment WHERE id = %(comment_id)s;""", form_dict)
+    comment_details = cursor.fetchall()
+    comment_details = dict(comment_details[0])
+    return comment_details
