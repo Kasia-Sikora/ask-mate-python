@@ -4,7 +4,7 @@ import connection
 @connection.connection_handler
 def get_all_questions(cursor):
     cursor.execute('''
-                SELECT * FROM question ORDER BY submission_time;
+                SELECT * FROM question ORDER BY submission_time DESC;
                 ''', )
     questions = cursor.fetchall()
     return questions
@@ -12,13 +12,14 @@ def get_all_questions(cursor):
 
 @connection.connection_handler
 def save_question(cursor, questions):
+    print(questions)
     cursor.execute('''
                     INSERT INTO question (submission_time, title, message) 
                     VALUES (CURRENT_TIMESTAMP, %(title)s, %(message)s);
                     SELECT * FROM question WHERE title= %(title)s AND message= %(message)s;
                     ''', questions)
     question = cursor.fetchall()
-    return question
+    return question[0]
 
 
 @connection.connection_handler
