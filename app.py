@@ -1,6 +1,5 @@
 from flask import Flask, url_for, render_template, request, redirect
 import data_manager
-import connection, util
 
 app = Flask(__name__)
 
@@ -81,10 +80,9 @@ def answer_comment_form():
         return redirect(url_for('answer_comment_details', answer_id=dict_comment['answer_id']))
 
 
-@app.route('/answer/<answer_id>/comments')
+@app.route('/answer/<answer_id>/d')
 def answer_comment_details(answer_id):
     answer = data_manager.search_for_answer(answer_id)
-    print(answer)
     comments = data_manager.get_all_answer_comments(answer_id)
     return render_template('comment_details.html',
                            answer_details=answer, comments=comments)
@@ -137,5 +135,14 @@ def form_comment(comment_id):
     form_dict['comment_id'] = comment_id
     comment_det = data_manager.update_comment(form_dict=form_dict)
     if comment_det['question_id'] is not None:
-        print('olololol')
         return redirect(url_for('question_details', question_id=comment_det['question_id']))
+
+@app.route('/comment/<comment_id>/delete')
+def delete_comment(comment_id):
+    answ_id = data_manager.delete_comment(comment_id)
+    answer_id = answ_id['answer_id']
+    return redirect(url_for('answer_comment_details', answer_id=answer_id))
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

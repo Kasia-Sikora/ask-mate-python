@@ -72,8 +72,8 @@ def change_view_number(cursor, question):
 @connection.connection_handler
 def get_all_question_comments(cursor, question_id):
     cursor.execute('''
-                SELECT * FROM comment WHERE question_id=%(question_id)s ORDER BY submission_time DESC;'''
-                   ,  {'question_id': question_id})
+                SELECT * FROM comment WHERE question_id=%(question_id)s ORDER BY submission_time DESC;''',
+                   {'question_id': question_id})
     question_comments = cursor.fetchall()
     return question_comments
 
@@ -86,12 +86,13 @@ def save_question_comment(cursor, question_comment):
     new_question_comment = cursor.fetchall()
     return new_question_comment
 
+
 #
 @connection.connection_handler
 def get_all_answer_comments(cursor, answer_id):
     cursor.execute('''
                 SELECT * FROM comment WHERE answer_id=%(answer_id)s ORDER BY submission_time DESC;'''
-                   ,  {'answer_id': answer_id})
+                   , {'answer_id': answer_id})
     answer_comments = cursor.fetchall()
     return answer_comments
 
@@ -103,6 +104,7 @@ def save_answer_comment(cursor, answer_comment):
                         SELECT * FROM comment WHERE answer_id = %(answer_id)s""", answer_comment)
     new_answer_comment = cursor.fetchall()
     return new_answer_comment
+
 
 #
 @connection.connection_handler
@@ -139,11 +141,20 @@ def get_comment(cursor, comment_id):
     comment_details = dict(comment_details[0])
     return comment_details
 
+
 @connection.connection_handler
 def update_comment(cursor, form_dict):
-    print(form_dict)
     cursor.execute("""UPDATE comment SET message = %(message)s WHERE id = %(comment_id)s;""", form_dict)
     cursor.execute("""SELECT * FROM comment WHERE id = %(comment_id)s;""", form_dict)
     comment_details = cursor.fetchall()
     comment_details = dict(comment_details[0])
     return comment_details
+
+
+@connection.connection_handler
+def delete_comment(cursor, comment_id):
+    cursor.execute("""SELECT answer_id FROM comment WHERE id = %(comment_id)s""", {'comment_id': comment_id})
+    answer_id = cursor.fetchall()
+    cursor.execute("""DELETE FROM comment WHERE id = %(comment_id)s""", {'comment_id': comment_id})
+    answer_id = dict(answer_id[0])
+    return answer_id
