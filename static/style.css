@@ -139,7 +139,10 @@ table {
 }
 
 #logout {
-    display: inline-block;
+    float: right;
+}
+
+#username {
     float: right;
 }
 
