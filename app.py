@@ -1,6 +1,7 @@
-from flask import Flask, url_for, render_template, request, redirect
+from flask import Flask, url_for, render_template, request, redirect, session
 import data_manager
 import os
+import util
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -174,6 +175,27 @@ def login():
         print(login_data)
         pass
     return render_template('login.html')
+
+
+@app.route('/registration')
+def registration():
+    return render_template('registration.html')
+
+
+@app.route('/registration-form', methods=['GET', 'POST'])
+def registration_form():
+    if request.method == 'POST':
+        registration_dict = request.form.to_dict()
+        hashed_pass = util.hash_password(registration_dict['password'])
+        registration_dict['password'] = hashed_pass
+        saved_login = data_manager.new_user(registration_dict)
+        if saved_login == registration_dict['username']:
+            session['username'] = request.form['username']
+            return redirect(url_for('login'))
+
+
+
+
 
 
 if __name__ == '__main__':

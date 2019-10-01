@@ -167,3 +167,12 @@ def delete_comment(cursor, comment_id):
     cursor.execute("""DELETE FROM comment WHERE id = %(comment_id)s""", {'comment_id': comment_id})
     answer_id = dict(answer_id[0])
     return answer_id
+
+@connection.connection_handler
+def new_user(cursor, registration_dict):
+    cursor.execute("""INSERT INTO users (login, password) 
+                        VALUES (%(username)s, %(password)s);
+                        SELECT login FROM users WHERE login = %(username)s""", registration_dict)
+    registration_login = cursor.fetchall()
+
+    return registration_login[0]['login']
