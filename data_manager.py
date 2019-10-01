@@ -176,3 +176,13 @@ def check_login(cursor, user_data):
                     WHERE login = %(login)s AND password = %(password)s;''', user_data)
     cos = cursor.fetchall()
     return cos
+
+
+@connection.connection_handler
+def new_user(cursor, registration_dict):
+    cursor.execute("""INSERT INTO users (login, password) 
+                        VALUES (%(username)s, %(password)s);
+                        SELECT login FROM users WHERE login = %(username)s""", registration_dict)
+    registration_login = cursor.fetchall()
+
+    return registration_login[0]['login']
