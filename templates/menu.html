@@ -5,9 +5,11 @@
     <a href="{{ url_for('login') }}"><img id="picture" src="/static/img/buttons/button_login.png"></a>
     <a href="{{ url_for('registration') }}"> <img id="picture" src="/static/img/buttons/button_registration.png"></a>
 
+
     {% if user %}
 
-        <a id="logout" href="{{ url_for('login') }}"> <img id="picture" src="/static/img/buttons/button_registration.png"></a>
+        <a id="logout" href="{{ url_for('logout') }}"> <img id="picture" src="/static/img/buttons/button_log-out.png"></a>
         <span id="username">{{ user }}</span>
     {% endif %}
+
 </div>
