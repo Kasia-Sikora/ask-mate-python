@@ -142,3 +142,7 @@ table {
     display: inline-block;
     float: right;
 }
+
+.message {
+    color: darkred;
+}

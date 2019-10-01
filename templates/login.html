@@ -8,6 +8,10 @@
         <p><label for="message">Password:</label><br>
             <input name="password" type="password" required minlength="5" maxlength="20"><br>
             <input type="submit" value="Login">
+
+        {% if message %}
+            <div class="message">{{ message }}</div>
+        {% endif %}
     </form>
 </div>
 {% endblock %}
