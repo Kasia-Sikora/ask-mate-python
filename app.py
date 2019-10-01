@@ -6,10 +6,16 @@ import util
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
+
 @app.route('/')
 def home():
-    user_questions = data_manager.get_all_questions()
-    return render_template('list.html', user_questions=user_questions)
+    try:
+        user = session['username']
+    except KeyError:
+        user = None
+    finally:
+        user_questions = data_manager.get_all_questions()
+        return render_template('list.html', user_questions=user_questions, user=user)
 
 
 @app.route('/add-question')
