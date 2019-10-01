@@ -172,9 +172,11 @@ def delete_comment(comment_id):
 def login():
     if request.method == 'POST':
         user_data = request.form.to_dict()
-        print(user_data)
         check_login = data_manager.check_login(user_data)
-        print(check_login)
+        verify = util.verify_password(user_data['password'], check_login['password'])
+        if verify:
+            session['username'] = request.form['login']
+            return redirect(url_for('home'))
     return render_template('login.html')
 
 
@@ -193,10 +195,6 @@ def registration_form():
         if saved_login == registration_dict['username']:
             session['username'] = request.form['username']
             return redirect(url_for('login'))
-
-
-
-
 
 
 if __name__ == '__main__':
