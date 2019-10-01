@@ -108,6 +108,7 @@ def answer_vote_down(question_id):
     data_manager.change_answer_vote(dictionary=info_dict)
     return redirect(url_for('question_details', question_id=question_id))
 
+
 @app.route('/question/<question_id>/vote-up')
 def question_vote_up(question_id):
     info_dict = {
@@ -158,11 +159,21 @@ def form_comment(comment_id):
     if comment_det['question_id'] is not None:
         return redirect(url_for('question_details', question_id=comment_det['question_id']))
 
+
 @app.route('/comment/<comment_id>/delete')
 def delete_comment(comment_id):
     answ_id = data_manager.delete_comment(comment_id)
     answer_id = answ_id['answer_id']
     return redirect(url_for('answer_comment_details', answer_id=answer_id))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        login_data = request.form.to_dict()
+        print(login_data)
+        pass
+    return render_template('login.html')
 
 
 if __name__ == '__main__':

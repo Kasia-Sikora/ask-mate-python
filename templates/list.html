@@ -18,8 +18,8 @@
                             <td rowspan="2"><a href="{{ url_for('question_details', question_id=question.id) }}">{{ question.title }}</a></td>
                             <td align="right">{{ question.view_number }}</td>
                             <td align="right">
-                                <a href="{{ url_for('question_vote_up', question_id=question.id) }}"><img src="/static/img/vote_up.jpg" width="20" height="25"></a>
-                                <a href="{{ url_for('question_vote_down', question_id=question.id) }}"><img src="/static/img/vote_down.jpg" width="20" height="25"></a>
+                                <a href="{{ url_for('question_vote_up', question_id=question.id) }}"><img src="/static/img/vote_up1.png" width="20" height="25"></a>
+                                <a href="{{ url_for('question_vote_down', question_id=question.id) }}"><img src="/static/img/vote_down2.png" width="20" height="25"></a>
                                 &nbsp;{{ question.vote_number }}</td>
                         </tr>
                     </table>
