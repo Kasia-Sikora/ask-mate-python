@@ -1,8 +1,9 @@
 from flask import Flask, url_for, render_template, request, redirect
 import data_manager
+import os
 
 app = Flask(__name__)
-
+app.secret_key = os.urandom(32)
 
 @app.route('/')
 def home():
