@@ -168,6 +168,16 @@ def delete_comment(cursor, comment_id):
     answer_id = dict(answer_id[0])
     return answer_id
 
+
+@connection.connection_handler
+def check_login(cursor, user_data):
+    cursor.execute('''
+                    SELECT id FROM users
+                    WHERE login = %(login)s AND password = %(password)s;''', user_data)
+    cos = cursor.fetchall()
+    return cos
+
+
 @connection.connection_handler
 def new_user(cursor, registration_dict):
     cursor.execute("""INSERT INTO users (login, password) 

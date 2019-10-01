@@ -4,9 +4,9 @@
 <div id="content">
     <form action="{{ url_for('login')}}" method="post" name="login" content="login" class="login">
         <p><label for="message">Login:</label><br>
-            <input name="login" type="text" >
+            <input name="login" type="text" required minlength="3" maxlength="20">
         <p><label for="message">Password:</label><br>
-            <input name="password" type="text"><br>
+            <input name="password" type="password" required minlength="5" maxlength="20"><br>
             <input type="submit" value="Login">
     </form>
 </div>
