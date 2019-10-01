@@ -54,7 +54,6 @@ body {
     font-family: 'Rock Salt', cursive;
     padding: 32px 100px 0 0;
     line-height: 150%;
-
 }
 
 #sentence:first-letter {
@@ -71,6 +70,7 @@ body {
     box-shadow:inset 0px 0px 5px 1px rgba(0,0,0,0.5);
 
 }
+
 .clear {
       clear: both;
 }
@@ -136,4 +136,8 @@ table {
 
 #picture2 {
     height: 20px;
+}
+
+.login {
+
 }
