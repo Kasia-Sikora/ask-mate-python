@@ -26,14 +26,14 @@ body {
     width: 1140px;
 }
 #menu {
-    bottom: 0;
-    left: 0;
     background-color: rgba(0, 188, 181, 0.8);
     height: 80px;
     padding: 0;
     background-image: url("img/bg-logo.png");
     background-repeat: repeat-x;
     background-size: 800px;
+    width: 100%;
+    border: 2px solid black;
 }
 
 #logo {
@@ -138,6 +138,7 @@ table {
     height: 20px;
 }
 
-.login {
-
+#logout {
+    display: inline-block;
+    float: right;
 }
