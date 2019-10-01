@@ -167,3 +167,12 @@ def delete_comment(cursor, comment_id):
     cursor.execute("""DELETE FROM comment WHERE id = %(comment_id)s""", {'comment_id': comment_id})
     answer_id = dict(answer_id[0])
     return answer_id
+
+
+@connection.connection_handler
+def check_login(cursor, user_data):
+    cursor.execute('''
+                    SELECT id FROM users
+                    WHERE login = %(login)s AND password = %(password)s;''', user_data)
+    cos = cursor.fetchall()
+    return cos

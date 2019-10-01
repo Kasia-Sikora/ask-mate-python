@@ -170,9 +170,10 @@ def delete_comment(comment_id):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        login_data = request.form.to_dict()
-        print(login_data)
-        pass
+        user_data = request.form.to_dict()
+        print(user_data)
+        check_login = data_manager.check_login(user_data)
+        print(check_login)
     return render_template('login.html')
 
 
