@@ -172,10 +172,10 @@ def delete_comment(cursor, comment_id):
 @connection.connection_handler
 def check_login(cursor, user_data):
     cursor.execute('''
-                    SELECT id FROM users
-                    WHERE login = %(login)s AND password = %(password)s;''', user_data)
-    cos = cursor.fetchall()
-    return cos
+                    SELECT password FROM users
+                    WHERE login = %(login)s;''', user_data)
+    user_name = cursor.fetchall()
+    return user_name[0]
 
 
 @connection.connection_handler
@@ -184,5 +184,4 @@ def new_user(cursor, registration_dict):
                         VALUES (%(username)s, %(password)s);
                         SELECT login FROM users WHERE login = %(username)s""", registration_dict)
     registration_login = cursor.fetchall()
-
     return registration_login[0]['login']

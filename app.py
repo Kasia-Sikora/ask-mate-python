@@ -6,6 +6,7 @@ import util
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
+
 @app.route('/')
 def home():
     user_questions = data_manager.get_all_questions()
