@@ -13,8 +13,8 @@ def get_all_questions(cursor):
 @connection.connection_handler
 def save_question(cursor, question):
     cursor.execute('''
-                    INSERT INTO question (submission_time, title, message,user_id) 
-                    VALUES (CURRENT_TIMESTAMP, %(title)s, %(message)s);
+                    INSERT INTO question (submission_time, title, message, user_id) 
+                    VALUES (CURRENT_TIMESTAMP, %(title)s, %(message)s %(user_id)s);
                     SELECT * FROM question WHERE title= %(title)s AND message= %(message)s;
                     ''', question)
     question = cursor.fetchall()
@@ -188,3 +188,11 @@ def new_user(cursor, registration_dict):
                         SELECT login FROM users WHERE login = %(username)s""", registration_dict)
     registration_login = cursor.fetchall()
     return registration_login[0]['login']
+
+
+@connection.connection_handler
+def search_for_user_id(cursor, user):
+    cursor.execute("""SELECT id FROM users 
+                    WHERE login = %(user)s""", {'username': user})
+    user_id = cursor.fetchall()
+    return user_id
