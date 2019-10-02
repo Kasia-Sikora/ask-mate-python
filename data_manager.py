@@ -192,15 +192,15 @@ def new_user(cursor, registration_dict):
 
 @connection.connection_handler
 def search_for_user_id(cursor, user):
-    cursor.execute("""SELECT id FROM users 
-                    WHERE login = %(user)s""", {'username': user})
+    cursor.execute("""SELECT id FROM users WHERE login = %(username)s""", {'username': user})
     user_id = cursor.fetchall()
     return user_id
 
 
-def get_list_of_users(cursor):
-    cursor.execute(""" SELECT login, reputation FROM users""")
-    list_of_users = cursor.fetchall()
-    return list_of_users
+# @connection.connection_handler
+# def get_list_of_users(cursor):
+#     cursor.execute(""" SELECT login, reputation FROM users""")
+#     list_of_users = cursor.fetchall()
+#     return list_of_users
 
 
