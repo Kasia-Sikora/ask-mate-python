@@ -237,5 +237,25 @@ def logout():
     return redirect(url_for('home', user=user))
 
 
+@app.route('/users-list')
+def users_list():
+    list_of_users = data_manager.get_list_of_users()
+    return render_template('list-of-users.html', list_of_users=list_of_users)
+
+
+@app.route('/user/<username>')
+def user_details(username):
+    ...
+    # try:
+    #     if username == session['username']:
+    #         user_id =
+    #     else:
+    #         session.pop('username', None)
+    #         raise KeyError
+    # except KeyError:
+    #     return redirect(url_for('login'))
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
