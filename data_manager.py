@@ -13,8 +13,8 @@ def get_all_questions(cursor):
 @connection.connection_handler
 def save_question(cursor, question):
     cursor.execute('''
-                    INSERT INTO question (submission_time, title, message, user_id) 
-                    VALUES (CURRENT_TIMESTAMP, %(title)s, %(message)s %(user_id)s);
+                    INSERT INTO question (submission_time, title, message) 
+                    VALUES (CURRENT_TIMESTAMP, %(title)s, %(message)s);
                     SELECT * FROM question WHERE title= %(title)s AND message= %(message)s;
                     ''', question)
     question = cursor.fetchall()
@@ -196,3 +196,11 @@ def search_for_user_id(cursor, user):
                     WHERE login = %(user)s""", {'username': user})
     user_id = cursor.fetchall()
     return user_id
+
+
+def get_list_of_users(cursor):
+    cursor.execute(""" SELECT login, reputation FROM users""")
+    list_of_users = cursor.fetchall()
+    return list_of_users
+
+
