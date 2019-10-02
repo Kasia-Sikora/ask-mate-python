@@ -21,7 +21,9 @@ def add_question():
 
 @app.route('/question-form', methods=['GET', 'POST'])
 def question_form():
+    user = util.check_session_usr()
     if request.method == 'POST':
+        user_id = data_manager.search_for_user_id(user)
         dict_new_quest = dict(request.form)
         quest_details = data_manager.save_question(dict_new_quest)
         return render_template('question_details.html',
