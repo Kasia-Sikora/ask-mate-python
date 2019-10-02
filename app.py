@@ -198,11 +198,17 @@ def login():
     if request.method == 'POST':
         user_data = request.form.to_dict()
         check_login = data_manager.check_login(user_data)
+        if not check_login:
+            message = 'Invalid login or password'
+            return render_template('login.html', message=message)
         verify = util.verify_password(user_data['password'], check_login['password'])
         if verify:
             session['username'] = request.form['login']
-            return redirect(url_for('home'))
-    return render_template('login.html', user=user)
+            return redirect(url_for('home', user=user))
+        else:
+            message = 'Invalid login or password'
+            return render_template('login.html', message=message)
+    return render_template('login.html')
 
 
 @app.route('/registration')

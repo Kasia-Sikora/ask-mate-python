@@ -52,7 +52,8 @@ def search_for_answer(cursor, answer_id):
 
 @connection.connection_handler
 def new_answer(cursor, answer_dict):
-    cursor.execute("""INSERT INTO answer (submission_time, question_id, message) VALUES (CURRENT_TIMESTAMP, %(question_id)s, %(message)s);
+    cursor.execute("""INSERT INTO answer (submission_time, question_id, message) 
+                        VALUES (CURRENT_TIMESTAMP, %(question_id)s, %(message)s);
                         SELECT * FROM question WHERE id = %(question_id)s""", answer_dict)
     question = cursor.fetchall()
     return question
@@ -174,7 +175,10 @@ def check_login(cursor, user_data):
                     SELECT password FROM users
                     WHERE login = %(login)s;''', user_data)
     user_name = cursor.fetchall()
-    return user_name[0]
+    if len(user_name) == 0:
+        return user_name
+    else:
+        return user_name[0]
 
 
 @connection.connection_handler
