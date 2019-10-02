@@ -11,13 +11,12 @@ def get_all_questions(cursor):
 
 
 @connection.connection_handler
-def save_question(cursor, questions):
-    print(questions)
+def save_question(cursor, question):
     cursor.execute('''
-                    INSERT INTO question (submission_time, title, message) 
+                    INSERT INTO question (submission_time, title, message,user_id) 
                     VALUES (CURRENT_TIMESTAMP, %(title)s, %(message)s);
                     SELECT * FROM question WHERE title= %(title)s AND message= %(message)s;
-                    ''', questions)
+                    ''', question)
     question = cursor.fetchall()
     return question[0]
 
