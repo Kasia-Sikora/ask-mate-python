@@ -1,3 +1,5 @@
+import psycopg2
+
 import connection
 
 
@@ -207,3 +209,24 @@ def get_list_of_users(cursor):
     return list_of_users
 
 
+@connection.connection_handler
+def search_data_by_user_id(cursor, user_id):
+
+    cursor.execute(
+        """SELECT id FROM question WHERE user_id = %(user_id)s""",
+        {'user_id': user_id})
+    question_tab_ids = cursor.fetchall()
+
+    cursor.execute("""SELECT * FROM answer WHERE user_id = %(user_id)s""",
+                   {'user_id': user_id})
+    matching_answers = cursor.fetchall()
+
+    from_question_ids = [x['id'] for x in question_tab_ids]
+    from_answer_ids = [x['question_id'] for x in matching_answers]
+    matching_quest_ids = tuple(set(from_answer_ids) | set(from_question_ids))
+    try:
+        cursor.execute("""SELECT * FROM question WHERE id IN %(id_s)s""", {'id_s': matching_quest_ids})
+        matching_questions = cursor.fetchall()
+    except psycopg2.errors.SyntaxError:
+        matching_questions = {}
+    return matching_questions, matching_answers

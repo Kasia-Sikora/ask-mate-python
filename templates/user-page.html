@@ -2,6 +2,24 @@
 
 {% block content %}
     <div id="content">
-        dzia-a
+        <div>Questions:</div>
+        <ul class="u-p-ul">
+            {% for question in question_dict %}
+                <li class="u-p-title">
+                    {{ question.title }}
+                    <ul>
+                        <li class="u-p-li">
+                            {{ question.message }}
+                        </li>
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+        <div>Answers:</div>
+        <ul class="u-p-ul">
+            {% for answer in answer_dict %}
+                <li class="u-p-li">{{ answer.message }}</li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}

@@ -187,7 +187,6 @@ def login():
             return render_template('login.html', message=message)
         verify = util.verify_password(user_data['password'], check_login['password'])
         if verify:
-            print(request.form['login'])
             session['username'] = request.form['login']
             return redirect(url_for('home'))
         else:
@@ -230,15 +229,17 @@ def user_details(username):
     try:
         if username == session['username']:
             user_id_list = data_manager.search_for_user_id(username)
-            user_id_dict = user_id_list[0]
-            user_id = user_id_dict['id']
+            user_id = user_id_list['id']
         else:
             session.pop('username', None)
             raise KeyError
-    except KeyError:
+    except KeyError as err:
         return redirect(url_for('login'))
     else:
-        return render_template('user-page.html')
+        matching_questions, matching_answers = data_manager.search_data_by_user_id(user_id)
+        return render_template('user-page.html',
+                               question_dict=matching_questions,
+                               answer_dict=matching_answers,)
 
 
 if __name__ == '__main__':
