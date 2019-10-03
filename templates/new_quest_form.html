@@ -5,9 +5,9 @@
         <form action="{{ url_for('question_form') }}" method="post" name="new_question" content="Add title">
             <input style="display:None" name="user_id" type="number" value="{{ user_id.id }}">
             <p><label for="title">Question Title:</label><br>
-                <input type="text" id="title_form" name="title" title="title"></p>
+                <input type="text" id="title_form" name="title" title="title" minlength="10" required></p>
             <p><label for="message">Question Details:</label><br>
-                <textarea id="message_form" name="message" title="message" rows="10" cols="50"></textarea></p>
+                <textarea id="message_form" name="message" title="message" rows="10" cols="50" minlength="5" required></textarea></p>
             <input type="submit" value="Submit">
         </form>
     </div>

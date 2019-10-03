@@ -148,3 +148,19 @@ table {
 .message {
     color: darkred;
 }
+
+.u-p-ul {
+    margin: 15px;
+    font-weight: normal;
+}
+
+.u-p-li {
+    margin: 15px;
+    font-weight: normal;
+}
+
+.u-p-title {
+    margin: 15px;
+    font-weight: bold;
+}
+
