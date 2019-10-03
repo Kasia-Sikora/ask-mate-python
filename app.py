@@ -224,15 +224,18 @@ def users_list():
 
 @app.route('/user/<username>')
 def user_details(username):
-    ...
-    # try:
-    #     if username == session['username']:
-    #         user_id =
-    #     else:
-    #         session.pop('username', None)
-    #         raise KeyError
-    # except KeyError:
-    #     return redirect(url_for('login'))
+    try:
+        if username == session['username']:
+            user_id_list = data_manager.search_for_user_id(username)
+            user_id_dict = user_id_list[0]
+            user_id = user_id_dict['id']
+        else:
+            session.pop('username', None)
+            raise KeyError
+    except KeyError:
+        return redirect(url_for('login'))
+    else:
+        return render_template('user-page.html')
 
 
 if __name__ == '__main__':

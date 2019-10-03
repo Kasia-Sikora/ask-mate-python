@@ -197,10 +197,10 @@ def search_for_user_id(cursor, user):
     return user_id
 
 
-# @connection.connection_handler
-# def get_list_of_users(cursor):
-#     cursor.execute(""" SELECT login, reputation FROM users""")
-#     list_of_users = cursor.fetchall()
-#     return list_of_users
+@connection.connection_handler
+def get_list_of_users(cursor):
+    cursor.execute(""" SELECT login, reputation FROM users""")
+    list_of_users = cursor.fetchall()
+    return list_of_users
 
 
