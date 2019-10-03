@@ -3,15 +3,14 @@
     <a href="{{ url_for('home') }}"><img id="picture" src="/static/img/buttons/button_home.png"></a>
     <a href="{{ url_for('users_list') }}"><img id="picture" src="/static/img/buttons/button_user-list.png"></a>
     <a href="{{ url_for('add_question') }}"><img id="picture" src="/static/img/buttons/button_add-a-question.png"></a>
-    {% if not user %}
-    <a href="{{ url_for('login') }}"><img id="picture" src="/static/img/buttons/button_login.png"></a>
-    <a href="{{ url_for('registration') }}"> <img id="picture" src="/static/img/buttons/button_registration.png"></a>
-    {% endif %}
 
-    {% if session %}
 
+    {% if session['username'] %}
         <a id="logout" href="{{ url_for('logout') }}"> <img id="picture" src="/static/img/buttons/button_log-out.png"></a>
-        <a id="username" href="{{ url_for('user_details', username=user)}}">{{ user }}</a>
+        <a id="username" href="{{ url_for('user_details', username=session['username'] )}}">{{ session['username']  }}</a>
+    {% else %}
+        <a href="{{ url_for('login') }}"><img id="picture" src="/static/img/buttons/button_login.png"></a>
+        <a href="{{ url_for('registration') }}"> <img id="picture" src="/static/img/buttons/button_registration.png"></a>
     {% endif %}
 
 </div>
