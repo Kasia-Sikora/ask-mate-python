@@ -4,6 +4,7 @@
 <div id="content">
     <form action="{{ url_for('answer_form')}}" method="post" name="new_answer" content="Add title">
          <input style="display:None" name="question_id" type="number" value="{{question_id}}">
+        <input style="display:None" name="user_id" type="number" value="{{ user_id.id }}">
         <p><label for="message">Answer:</label><br>
         <textarea id="message_form" name="message" title="message" rows="10", cols="50" minlength="10"></textarea></p>
         <input type="submit" value="Submit">

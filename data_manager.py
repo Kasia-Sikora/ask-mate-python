@@ -13,7 +13,7 @@ def get_all_questions(cursor):
 @connection.connection_handler
 def save_question(cursor, question):
     cursor.execute('''
-                    INSERT INTO question (submission_time, title, message, id) 
+                    INSERT INTO question (submission_time, title, message, user_id) 
                     VALUES (CURRENT_TIMESTAMP, %(title)s, %(message)s, %(user_id)s);
                     SELECT * FROM question WHERE title= %(title)s AND message= %(message)s;
                     ''', question)
@@ -52,8 +52,8 @@ def search_for_answer(cursor, answer_id):
 
 @connection.connection_handler
 def new_answer(cursor, answer_dict):
-    cursor.execute("""INSERT INTO answer (submission_time, question_id, message) 
-                        VALUES (CURRENT_TIMESTAMP, %(question_id)s, %(message)s);
+    cursor.execute("""INSERT INTO answer (submission_time, question_id, message, user_id) 
+                        VALUES (CURRENT_TIMESTAMP, %(question_id)s, %(message)s, %(user_id)s);
                         SELECT * FROM question WHERE id = %(question_id)s""", answer_dict)
     question = cursor.fetchall()
     return question
@@ -112,7 +112,10 @@ def save_answer_comment(cursor, answer_comment):
 def change_answer_vote(cursor, dictionary):
     cursor.execute(""" UPDATE answer 
                         SET vote_number = vote_number + %(vote)s 
-                        WHERE id = %(id_answer)s""",
+                        WHERE id = %(id_answer)s;
+                        UPDATE users 
+                        SET reputation = reputation + %(reputation)s
+                        WHERE id = %(user_id)s""",
                    dictionary)
 
 
@@ -120,7 +123,11 @@ def change_answer_vote(cursor, dictionary):
 def change_question_vote(cursor, dictionary):
     cursor.execute(""" UPDATE question 
                         SET vote_number = vote_number + %(vote)s 
-                        WHERE id = %(question_id)s""",
+                        WHERE id = %(question_id)s;
+                        UPDATE users 
+                        SET reputation = reputation + %(reputation)s
+                        WHERE id = %(user_id)s
+                        """,
                    dictionary)
 
 
@@ -207,3 +214,11 @@ def get_list_of_users(cursor):
     return list_of_users
 
 
+@connection.connection_handler
+def search_for_user_id_by_question(cursor, question_id):
+    cursor.execute(""" SELECT users.id, a.user_id, q.user_id FROM users 
+                        JOIN question q on users.id = q.user_id
+                        JOIN answer a on q.id = a.question_id
+                        WHERE q.id = %(question_id)s OR a.question_id = %(question_id)s""", {'question_id': question_id})
+    ids = cursor.fetchall()
+    return ids[0]

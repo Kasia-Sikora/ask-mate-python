@@ -66,7 +66,9 @@ def comment_details(question_id):
 
 @app.route('/question/<question_id>/new-answer')
 def add_answer(question_id):
-    return render_template('new_answer_form.html', question_id=question_id)
+    user = util.check_session_usr()
+    user_id = data_manager.search_for_user_id(user)
+    return render_template('new_answer_form.html', question_id=question_id, user_id=user_id)
 
 
 @app.route('/answer_form', methods=['GET', 'POST'])
@@ -79,7 +81,6 @@ def answer_form():
 
 @app.route('/answer/<answer_id>/new-comment')
 def new_answer_comment(answer_id):
-    
     return render_template('answer_comment_form.html', answer_id=answer_id)
 
 
@@ -101,9 +102,12 @@ def answer_comment_details(answer_id):
 
 @app.route('/question/<question_id>/answer-up')
 def answer_vote_up(question_id):
+    user_id = data_manager.search_for_user_id_by_question(question_id)
     info_dict = {
         'id_answer': request.args.get('answer_id'),
-        "vote": 1
+        "vote": 1,
+        "reputation": 10,
+        "user_id": user_id['id']
     }
     data_manager.change_answer_vote(dictionary=info_dict)
     return redirect(url_for('question_details', question_id=question_id))
@@ -111,9 +115,12 @@ def answer_vote_up(question_id):
 
 @app.route('/question/<question_id>/answer-down')
 def answer_vote_down(question_id):
+    user_id = data_manager.search_for_user_id_by_question(question_id)
     info_dict = {
         'id_answer': request.args.get('answer_id'),
-        "vote": -1
+        "vote": -1,
+        "reputation": -2,
+        "user_id": user_id['id'],
     }
     data_manager.change_answer_vote(dictionary=info_dict)
     return redirect(url_for('question_details', question_id=question_id))
@@ -121,9 +128,12 @@ def answer_vote_down(question_id):
 
 @app.route('/question/<question_id>/vote-up')
 def question_vote_up(question_id):
+    user_id = data_manager.search_for_user_id_by_question(question_id)
     info_dict = {
         "vote": 1,
-        "question_id": question_id
+        "question_id": question_id,
+        "reputation": 5,
+        "user_id": user_id['id'],
     }
     data_manager.change_question_vote(dictionary=info_dict)
     return redirect(url_for('home'))
@@ -131,10 +141,13 @@ def question_vote_up(question_id):
 
 @app.route('/question/<question_id>/vote-down')
 def question_vote_down(question_id):
+    user_id = data_manager.search_for_user_id_by_question(question_id)
     info_dict = {
 
         "vote": -1,
-        "question_id": question_id
+        "question_id": question_id,
+        "reputation": -2,
+        "user_id": user_id['id'],
     }
     data_manager.change_question_vote(dictionary=info_dict)
     return redirect(url_for('home'))
