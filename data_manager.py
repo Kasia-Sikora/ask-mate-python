@@ -13,8 +13,8 @@ def get_all_questions(cursor):
 @connection.connection_handler
 def save_question(cursor, question):
     cursor.execute('''
-                    INSERT INTO question (submission_time, title, message) 
-                    VALUES (CURRENT_TIMESTAMP, %(title)s, %(message)s);
+                    INSERT INTO question (submission_time, title, message, id) 
+                    VALUES (CURRENT_TIMESTAMP, %(title)s, %(message)s, %(user_id)s);
                     SELECT * FROM question WHERE title= %(title)s AND message= %(message)s;
                     ''', question)
     question = cursor.fetchall()
@@ -81,8 +81,8 @@ def get_all_question_comments(cursor, question_id):
 
 @connection.connection_handler
 def save_question_comment(cursor, question_comment):
-    cursor.execute("""INSERT INTO comment (question_id, submission_time, message) 
-                        VALUES (%(question_id)s, CURRENT_TIMESTAMP, %(message)s);
+    cursor.execute("""INSERT INTO comment (question_id, submission_time, message, id) 
+                        VALUES (%(question_id)s, CURRENT_TIMESTAMP, %(message)s, %(user_id)s);
                         SELECT * FROM comment WHERE question_id = %(question_id)s""", question_comment)
     new_question_comment = cursor.fetchall()
     return new_question_comment
@@ -194,7 +194,10 @@ def new_user(cursor, registration_dict):
 def search_for_user_id(cursor, user):
     cursor.execute("""SELECT id FROM users WHERE login = %(username)s""", {'username': user})
     user_id = cursor.fetchall()
-    return user_id
+    if len(user_id) == 0:
+        return user_id
+    else:
+        return user_id[0]
 
 
 # @connection.connection_handler

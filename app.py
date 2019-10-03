@@ -17,22 +17,17 @@ def home():
 @app.route('/add-question')
 def add_question():
     user = util.check_session_usr()
-    return render_template('new_quest_form.html', user=user)
+    user_id = data_manager.search_for_user_id(user)
+    return render_template('new_quest_form.html', user_id=user_id)
 
 
 @app.route('/question-form', methods=['GET', 'POST'])
 def question_form():
-    user = util.check_session_usr()
-    print(user)
     if request.method == 'POST':
-        user_id = data_manager.search_for_user_id(user)
-        print(user_id)
         dict_new_quest = dict(request.form)
         quest_details = data_manager.save_question(dict_new_quest)
-        print(quest_details)
         return render_template('question_details.html',
-                               question_details=quest_details,
-                               user=user)
+                               question_details=quest_details)
 
 
 @app.route('/question/<question_id>')
@@ -207,6 +202,7 @@ def login():
             return render_template('login.html', message=message)
         verify = util.verify_password(user_data['password'], check_login['password'])
         if verify:
+            print(request.form['login'])
             session['username'] = request.form['login']
             return redirect(url_for('home', user=user))
         else:

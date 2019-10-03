@@ -8,7 +8,7 @@
     <a href="{{ url_for('registration') }}"> <img id="picture" src="/static/img/buttons/button_registration.png"></a>
     {% endif %}
 
-    {% if user %}
+    {% if session %}
 
         <a id="logout" href="{{ url_for('logout') }}"> <img id="picture" src="/static/img/buttons/button_log-out.png"></a>
         <a id="username" href="{{ url_for('user_details', username=user)}}">{{ user }}</a>
